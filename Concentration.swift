@@ -16,7 +16,7 @@ class Concentration
     
     var score = 0
     
-    var seenIdentifiers = [Int]()
+    var seenIndices = [Int]()
     
     var isFinished = false
     
@@ -33,16 +33,16 @@ class Concentration
                         cards[matchIndex].isMatched = true
                         cards[index].isMatched = true
                     } else {
-                        if seenIdentifiers.contains(cards[index].identifier) {
+                        if seenIndices.contains(index) {
                             score -= 1
                         } else {
-                            seenIdentifiers.append(cards[index].identifier)
+                            seenIndices.append(index)
                         }
                         
-                        if seenIdentifiers.contains(cards[matchIndex].identifier) {
+                        if seenIndices.contains(matchIndex) {
                             score -= 1
                         } else {
-                            seenIdentifiers.append(cards[matchIndex].identifier)
+                            seenIndices.append(matchIndex)
                         }
                     }
                     cards[index].isFaceUp = true

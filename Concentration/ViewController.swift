@@ -68,6 +68,18 @@ class ViewController: UIViewController {
         flipCountLabel.text = "Welcome!"
     }
     
+    func flipCard(withButton button: UIButton, withCard card: Card, flipUp: Bool) {
+        if flipUp {
+            UIView.transition(with: button, duration: 0.5, options: [.transitionFlipFromRight], animations: nil, completion: nil)
+            button.setTitle(emoji(for: card), for: UIControl.State.normal)
+            button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        } else {
+            UIView.transition(with: button, duration: 0.5, options: [.transitionFlipFromRight], animations: nil, completion: nil)
+            button.setTitle("", for: UIControl.State.normal)
+            button.backgroundColor = card.isMatched ? #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 0) : #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        }
+    }
+    
     func updateViewFromModel() {
         flipCountLabel.text = "Score: \(game.score)"
         for index in cardButtons.indices {
@@ -75,13 +87,9 @@ class ViewController: UIViewController {
             let card = game.cards[index]
             if card.changed {
                 if card.isFaceUp {
-                    UIView.transition(with: button, duration: 0.5, options: [.transitionFlipFromRight], animations: nil, completion: nil)
-                    button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                    button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                    flipCard(withButton: button, withCard: card, flipUp: true)
                 } else {
-                    UIView.transition(with: button, duration: 0.5, options: [.transitionFlipFromRight], animations: nil, completion: nil)
-                    button.setTitle("", for: UIControl.State.normal)
-                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 0) : #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+                    flipCard(withButton: button, withCard: card, flipUp: false)
                 }
             }
         }
@@ -89,9 +97,7 @@ class ViewController: UIViewController {
             for index in cardButtons.indices {
                 let button = cardButtons[index]
                 let card = game.cards[index]
-                UIView.transition(with: button, duration: 0.5, options: [.transitionFlipFromRight], animations: nil, completion: nil)
-                button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                flipCard(withButton: button, withCard: card, flipUp: true)
             }
             newGameButton.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         }
